@@ -13,12 +13,14 @@ public class Enemy : MonoBehaviour
 	
 	private bool playerSight = false;
 	private GameObject thePlayer;
+	private Vector3 enemyStartPos;
 	
 	
     // Start is called before the first frame update
     void Start()
     {
 		thePlayer = GameObject.FindGameObjectsWithTag("Player")[0];
+		enemyStartPos  = transform.position;
 		detectPlayer();
     }
 
@@ -26,17 +28,25 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         detectPlayer();
-		if(playerSight == true)
+		if(playerSight == true){
 			moveToPlayer();
+		}
+		else{
+			returnToStart();
+		}
     }
 	
-	/*void OnCollisionEnter( Collision coll ) {
+	void OnCollisionEnter( Collision coll ) {
 		
 		GameObject collidedWith = coll.gameObject;
-        if ( collidedWith.tag == "Player" ) {
-			Player.health -= 1;
+        if ( collidedWith.tag == "wall" ) {
+			StopCoroutine(blind());
+			StartCoroutine(blind());
 		}
-	} */
+		else if ( collidedWith.tag == "Player" ) {
+			//thePlayer.health -= 1;
+		} 
+	}
 	
 	void detectPlayer(){
 		//Vector3 position = transform.position;
@@ -56,5 +66,25 @@ public class Enemy : MonoBehaviour
         current.z += speed * Time.deltaTime * (destination.z - current.z);
 		
         transform.position = current;
+	}
+	
+	void returnToStart(){
+		Vector3 current = transform.position;
+		
+		current.x += (speed/4)  * Time.deltaTime * (enemyStartPos.x - current.x);
+        current.z += (speed/4) * Time.deltaTime * (enemyStartPos.z - current.z);
+		
+        transform.position = current;
+	}
+	
+	IEnumerator blind(){ //temporarily reduces the enemy sight range, to get it to stop chasing
+		float oldSight = sightRange;
+		sightRange = 0;
+		yield return new WaitForSeconds (3);
+		sightRange = oldSight;
+		/*if(playerSight == false){
+			StopCoroutine(returnToStart());
+			StartCoroutine(returnToStart());
+		}*/
 	}
 }
