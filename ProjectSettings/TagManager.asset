@@ -17,9 +17,8 @@ TagManager:
   - 
   - PostProcessing
   - ProjectilePlayer
-  - 
-  - 
-  - 
+  - Wall
+  - Player
   - 
   - 
   - 

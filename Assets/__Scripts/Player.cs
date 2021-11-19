@@ -9,11 +9,12 @@ public class Player : MonoBehaviour {
     [Header("Set in Inspector")]
     public float speed = 30;
     public float force = 500;
+    public float enemyProjectileDamage = 5;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
     [Header("Set Dynamically")]
-    public float health = 10;
+    public float health = 20;
 
     void Awake() {
         if (S == null) {
@@ -62,4 +63,17 @@ public class Player : MonoBehaviour {
 
     }
 
+    void OnCollisionEnter(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "ProjectileEnemy") {
+            Destroy(otherGO);
+            health -= enemyProjectileDamage;
+
+            if (health <= 0) {
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }
