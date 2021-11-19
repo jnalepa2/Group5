@@ -8,6 +8,9 @@ public class Player : MonoBehaviour {
 
     [Header("Set in Inspector")]
     public float speed = 30;
+    public float force = 500;
+    public GameObject projectilePrefab;
+    public GameObject gunEnd;
 
     [Header("Set Dynamically")]
     public float health = 10;
@@ -42,10 +45,21 @@ public class Player : MonoBehaviour {
 
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg * -1 + 90;
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+
+        //Player can shoot with mouse button
+        if (Input.GetMouseButtonDown(0)) {
+            FireGun(angle);
+        }
     }
 
-    float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
-        return Mathf.Atan2(b.y - a.y, b.x - a.x) * Mathf.Rad2Deg;
+    void FireGun(float angle) {
+        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+        projGO.transform.position = gunEnd.transform.position;
+        //projGO.transform.Translate(0, 0, 1);
+        projGO.transform.Rotate(0, angle, 0);
+        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+        rigidB.AddRelativeForce(projGO.transform.forward * force);
+
     }
 
 }
