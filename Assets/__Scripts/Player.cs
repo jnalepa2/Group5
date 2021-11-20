@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 
     [Header("Set Dynamically")]
     public float health = 20;
+    public float ammo = 20;
 
     void Awake() {
         if (S == null) {
@@ -54,12 +55,22 @@ public class Player : MonoBehaviour {
     }
 
     void FireGun(float angle) {
-        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
-        projGO.transform.position = gunEnd.transform.position;
-        //projGO.transform.Translate(0, 0, 1);
-        projGO.transform.Rotate(0, angle, 0);
-        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-        rigidB.AddRelativeForce(projGO.transform.forward * force);
+        if (ammo > 0) {
+            GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+
+            //place the newly created projectile at the end of the player's gun
+            projGO.transform.position = gunEnd.transform.position;
+
+            //rotate the projectile to point toward direction of aiming
+            projGO.transform.Rotate(0, angle, 0);
+
+            //apply force to projectile to fire it
+            Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+            rigidB.AddRelativeForce(projGO.transform.forward * force);
+
+            //use ammo
+            ammo -= 1;
+        }
 
     }
 
