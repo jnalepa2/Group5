@@ -9,9 +9,10 @@ public class Player : MonoBehaviour {
 
     [Header("Set in Inspector")]
     public float moveSpeed = 30;
-    public float force = 500;
+    public float projectileForce = 500;
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
+    public float ammoPack = 10;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour {
 
             //apply force to projectile to fire it
             Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-            rigidB.AddRelativeForce(projGO.transform.forward * force);
+            rigidB.AddRelativeForce(projGO.transform.forward * projectileForce);
 
             //use ammo
             ammo -= 1;
@@ -91,6 +92,16 @@ public class Player : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
+        
+    }
 
+    //Update this method to add player interactions with items
+    void OnCollisionStay(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            ammo += ammoPack;
+        }
     }
 }
