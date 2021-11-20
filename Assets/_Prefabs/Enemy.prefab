@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 54770397391964126}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   speed: 1
   sightRange: 15
   health: 3
+  alive: 1
 --- !u!54 &54770397391964126
 Rigidbody:
   m_ObjectHideFlags: 0

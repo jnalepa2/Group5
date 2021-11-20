@@ -97,12 +97,18 @@ public class Player : MonoBehaviour
         {
             Destroy(otherGO);
             health -= enemyProjectileDamage;
-
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
         }
+		
+		else if(otherGO.tag == "Enemy")
+		{
+			health -= 2;
+		}
+		
+		if (health <= 0)
+		{
+			Destroy(gameObject);
+			otherGO.GetComponent<Enemy>().playerSight = false;
+		}
 
     }
 

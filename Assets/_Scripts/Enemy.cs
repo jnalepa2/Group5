@@ -10,52 +10,61 @@ public class Enemy : MonoBehaviour
 	
 	[Header("Set Dynamically")]
 	public float health = 3;
+	public bool alive = true;				//Used to set the enemy to active or inactive so it behaves better
+	public bool playerSight = false;		//If the player is in range of vision
 	
-	private bool playerSight = false;
 	private GameObject thePlayer;
 	private Vector3 enemyStartPos;
 	
 	
-    // Start is called before the first frame update
     void Start()
     {
 		thePlayer = GameObject.FindGameObjectsWithTag("Player")[0];
 		enemyStartPos  = transform.position;
-		detectPlayer();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        detectPlayer();
-		if(playerSight == true){
-			moveToPlayer();
-		}
-		else{
-			returnToStart();
+        if(alive){
+			if(thePlayer != null)		detectPlayer();
+			
+				if(playerSight == true){
+					moveToPlayer();
+				}
+				else{
+					returnToStart();
+				}
 		}
     }
 	
-	void OnCollisionEnter( Collision coll ) {
+	void FixedUpdate()
+	{
+		GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
+		if(Players == null)			thePlayer = null;
+	}
+	
+	IEnumerator OnCollisionStay( Collision coll ) {
 		
 		GameObject collidedWith = coll.gameObject;
         if ( collidedWith.tag == "Wall" ) {
-			StopCoroutine(blind());
-			StartCoroutine(blind());
+			alive = false;
+			yield return new WaitForSeconds (1);
+			alive = true;
 		}
 		else if ( collidedWith.tag == "Player" ) {
-			//thePlayer.health -= 1;
-		} 
+			alive = false;
+			yield return new WaitForSeconds (2);
+			alive = true;
+		}
 	}
 	
 	void detectPlayer(){
-		//Vector3 position = transform.position;
-		float distance = Vector3.Distance(thePlayer.transform.position, transform.position);
-		
-		if( distance < sightRange )
-		{ playerSight = true; }
-		else 
-		{ playerSight = false; }
+			float distance = Vector3.Distance(thePlayer.transform.position, transform.position);
+			
+			if( distance < sightRange )
+			{ playerSight = true; }
+			else 
+			{ playerSight = false; }
 	}
 	
 	void moveToPlayer(){
@@ -77,14 +86,10 @@ public class Enemy : MonoBehaviour
         transform.position = current;
 	}
 	
-	IEnumerator blind(){ //temporarily reduces the enemy sight range, to get it to stop chasing
-		float oldSight = sightRange;
-		sightRange = 0;
-		yield return new WaitForSeconds (3);
-		sightRange = oldSight;
-		/*if(playerSight == false){
-			StopCoroutine(returnToStart());
-			StartCoroutine(returnToStart());
-		}*/
+	public void takeDamage()
+	{
+		this.health -= 8;
+		if(health <= 0)		alive = false;
+		if(!alive)			Destroy(gameObject);
 	}
 }

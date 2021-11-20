@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
         else if (otherGO.tag == "Enemy") {
             Destroy(gameObject);
             //call enemy script's function to decrement their health
+			
+			otherGO.GetComponent<Enemy>().takeDamage();
         }
     }
 }
