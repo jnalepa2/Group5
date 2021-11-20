@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
 	void OnCollisionEnter( Collision coll ) {
 		
 		GameObject collidedWith = coll.gameObject;
-        if ( collidedWith.tag == "wall" ) {
+        if ( collidedWith.tag == "Wall" ) {
 			StopCoroutine(blind());
 			StartCoroutine(blind());
 		}
