@@ -10,12 +10,14 @@ public class Player : MonoBehaviour {
     public float speed = 30;
     public float force = 500;
     public float enemyProjectileDamage = 5;
+    public float fireRate = 2;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
+    public float nextFire = 0;
 
     void Awake() {
         if (S == null) {
@@ -26,7 +28,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void Update() {
+    void FixedUpdate() {
         //Move player based on keyboard input  
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
@@ -49,13 +51,16 @@ public class Player : MonoBehaviour {
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
 
         //Player can shoot with mouse button
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && Time.time > nextFire) {
             FireGun(angle);
         }
     }
 
     void FireGun(float angle) {
         if (ammo > 0) {
+            //update time
+            nextFire = Time.time + fireRate;
+
             GameObject projGO = Instantiate<GameObject>(projectilePrefab);
 
             //place the newly created projectile at the end of the player's gun
