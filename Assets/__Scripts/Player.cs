@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Adapted from Hero.cs from Chapter 30, Space SHMUP, Introduction to Game Design, Prototyping, and Development by Jeremy Gibson Bond
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
     static public Player S;
     private Rigidbody playerRigid;
 
@@ -21,18 +22,22 @@ public class Player : MonoBehaviour {
     public float ammo = 20;
     public float nextFire = 0;
 
-    void Awake() {
-        if (S == null) {
+    void Awake()
+    {
+        if (S == null)
+        {
             S = this;
             playerRigid = gameObject.GetComponent<Rigidbody>();
         }
-        else {
+        else
+        {
             Debug.LogError("Player.Awake() Attempted to assign a second Player.S!");
         }
     }
 
-    void Update() {
-        //Move player based on keyboard input  
+    void Update()
+    {
+        //Move player based on keyboard input  
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
 
@@ -53,13 +58,16 @@ public class Player : MonoBehaviour {
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
 
         //Player can shoot with mouse button
-        if (Input.GetMouseButtonDown(0) && Time.time > nextFire) {
+        if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
+        {
             FireGun(angle);
         }
     }
 
-    void FireGun(float angle) {
-        if (ammo > 0) {
+    void FireGun(float angle)
+    {
+        if (ammo > 0)
+        {
             //update time
             nextFire = Time.time + fireRate;
 
@@ -81,25 +89,30 @@ public class Player : MonoBehaviour {
 
     }
 
-    void OnCollisionEnter(Collision coll) {
+    void OnCollisionEnter(Collision coll)
+    {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "ProjectileEnemy") {
+        if (otherGO.tag == "ProjectileEnemy")
+        {
             Destroy(otherGO);
             health -= enemyProjectileDamage;
 
-            if (health <= 0) {
+            if (health <= 0)
+            {
                 Destroy(gameObject);
             }
         }
-        
+
     }
 
     //Update this method to add player interactions with items
-    void OnCollisionStay(Collision coll) {
+    void OnCollisionStay(Collision coll)
+    {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space"))
+        {
             Destroy(otherGO);
             ammo += ammoPack;
         }
