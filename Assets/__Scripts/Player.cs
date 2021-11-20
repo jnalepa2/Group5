@@ -91,6 +91,16 @@ public class Player : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
+        
+    }
 
+    //Update this method to add player interactions with items
+    void OnCollisionStay(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            ammo += 10;
+        }
     }
 }
