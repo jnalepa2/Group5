@@ -44,16 +44,38 @@ public class Enemy : MonoBehaviour
 	}
 	
 	IEnumerator OnCollisionStay( Collision coll ) {
-		
 		GameObject collidedWith = coll.gameObject;
-        if ( collidedWith.tag == "Wall" ) {
+		if ( collidedWith.tag != "Ground" )
+		{
 			alive = false;
-			yield return new WaitForSeconds (1);
+			if ( collidedWith.tag == "Wall" )
+			{
+				returnToStart();
+				yield return new WaitForSeconds (1);
+			}
+			else if ( collidedWith.tag == "Player" )
+			{
+				returnToStart(1);
+				yield return new WaitForSeconds (2);
+			}
 			alive = true;
 		}
-		else if ( collidedWith.tag == "Player" ) {
+	}
+	
+	IEnumerator OnCollisionEnter( Collision coll )
+	{
+		GameObject collidedWith = coll.gameObject;
+		if ( collidedWith.tag != "Ground" )
+		{
 			alive = false;
-			yield return new WaitForSeconds (2);
+			if ( collidedWith.tag == "Wall" ) {
+				returnToStart();
+				yield return new WaitForSeconds (1);
+			}
+			else if ( collidedWith.tag == "Player" ) {
+				returnToStart(1);
+				yield return new WaitForSeconds (2);
+			}
 			alive = true;
 		}
 	}
@@ -82,6 +104,15 @@ public class Enemy : MonoBehaviour
 		
 		current.x += (speed/4)  * Time.deltaTime * (enemyStartPos.x - current.x);
         current.z += (speed/4) * Time.deltaTime * (enemyStartPos.z - current.z);
+		
+        transform.position = current;
+	}
+	
+	void returnToStart(float forcedSpeed){
+		Vector3 current = transform.position;
+		
+		current.x += (forcedSpeed/8)  * Time.deltaTime * (enemyStartPos.x - current.x);
+        current.z += (forcedSpeed/8) * Time.deltaTime * (enemyStartPos.z - current.z);
 		
         transform.position = current;
 	}

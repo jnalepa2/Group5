@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Ammo
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
