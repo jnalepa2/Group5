@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Adapted from Hero.cs from Chapter 30, Space SHMUP, Introduction to Game Design, Prototyping, and Development by Jeremy Gibson Bond
 public class Player : MonoBehaviour
@@ -17,10 +18,16 @@ public class Player : MonoBehaviour
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
+    //health, ammo and money display
+    public Text healthText;
+    public Text ammoText;
+    public Text moneyText;
+
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
     public float nextFire = 0;
+  
 
     void Awake()
     {
@@ -40,6 +47,8 @@ public class Player : MonoBehaviour
         //Move player based on keyboard input  
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
+        ammoText.text = "Ammo : " + ammo;
+        healthText.text = "Health : " + health;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
         Vector3 moveInput = new Vector3(xAxis, 0, zAxis) * moveSpeed;
@@ -61,6 +70,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
         {
             FireGun(angle);
+            ammoText.text = "Ammo : " + ammo;
         }
     }
 
@@ -92,6 +102,7 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision coll)
     {
         GameObject otherGO = coll.gameObject;
+        healthText.text = "Health : " + health;
 
         if (otherGO.tag == "ProjectileEnemy")
         {
@@ -102,7 +113,9 @@ public class Player : MonoBehaviour
 		else if(otherGO.tag == "Enemy")
 		{
 			health -= 2;
-		}
+            healthText.text = "Health : " + health;
+
+        }
 		
 		if (health <= 0)
 		{
