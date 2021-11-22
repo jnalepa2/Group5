@@ -25,8 +25,9 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(alive){
-			if(thePlayer != null)		detectPlayer();
+        if(alive)
+		{
+				detectPlayer();
 			
 				if(playerSight == true){
 					moveToPlayer();
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
 				else{
 					returnToStart();
 				}
+			
 		}
     }
 	
@@ -68,7 +70,7 @@ public class Enemy : MonoBehaviour
 		if ( collidedWith.tag != "Ground" )
 		{
 			alive = false;
-			if ( collidedWith.tag == "Wall" ) {
+			if ( (collidedWith.tag == "Wall" ) || (collidedWith.tag == "Door" ) || (collidedWith.tag == "LockedDoor" ) ) {
 				returnToStart();
 				yield return new WaitForSeconds (1);
 			}
@@ -81,6 +83,11 @@ public class Enemy : MonoBehaviour
 	}
 	
 	void detectPlayer(){
+			if (thePlayer == null)
+			{
+				playerSight = false;
+				return;
+			}
 			float distance = Vector3.Distance(thePlayer.transform.position, transform.position);
 			
 			if( distance < sightRange )
