@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
+    public bool hasKey = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
@@ -121,6 +122,31 @@ public class Player : MonoBehaviour
         {
             Destroy(otherGO);
             ammo += ammoPack;
+        }
+        else if (otherGO.tag == "Key")
+        {
+            Destroy(otherGO);
+            hasKey = true;
+        }
+    }
+
+
+    // Method to open sliding doors when the player approaches them
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Door")
+        {
+            if (other.GetComponent<Door>().Moving == false)
+            {
+                other.GetComponent<Door>().Moving = true;
+            }
+        }
+        else if (other.tag == "LockedDoor" && hasKey == true)
+        {
+            if (other.GetComponent<LockedDoor>().Moving == false)
+            {
+                other.GetComponent<LockedDoor>().Moving = true;
+            }
         }
     }
 }
