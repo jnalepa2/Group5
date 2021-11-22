@@ -9,6 +9,7 @@ TagManager:
   - Ammo
   - Enemy
   - Ground
+  - Door
   layers:
   - Default
   - TransparentFX

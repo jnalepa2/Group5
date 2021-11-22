@@ -123,4 +123,15 @@ public class Player : MonoBehaviour
             ammo += ammoPack;
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Door")
+        {
+            if (other.GetComponent<Door>().Moving == false)
+            {
+                other.GetComponent<Door>().Moving = true;
+            }
+        }
+    }
 }
