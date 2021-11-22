@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
 		if ( collidedWith.tag != "Ground" )
 		{
 			alive = false;
-			if ( collidedWith.tag == "Wall" ) {
+			if ( (collidedWith.tag == "Wall" ) || (collidedWith.tag == "Door" ) ) {
 				returnToStart();
 				yield return new WaitForSeconds (1);
 			}
