@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Wall") {
+        if (otherGO.tag == "Wall" || otherGO.tag == "Door") {
             Destroy(gameObject);
         }
         else if (otherGO.tag == "Enemy") {
