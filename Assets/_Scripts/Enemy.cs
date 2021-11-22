@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
 		if ( collidedWith.tag != "Ground" )
 		{
 			alive = false;
-			if ( (collidedWith.tag == "Wall" ) || (collidedWith.tag == "Door" ) ) {
+			if ( (collidedWith.tag == "Wall" ) || (collidedWith.tag == "Door" ) || (collidedWith.tag == "LockedDoor" ) ) {
 				returnToStart();
 				yield return new WaitForSeconds (1);
 			}
