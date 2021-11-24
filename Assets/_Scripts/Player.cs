@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Door")
         {
-            if (other.GetComponent<Door>().Moving == false)
+            if (other.GetComponent<Door>().doorState == )
             {
                 other.GetComponent<Door>().Moving = true;
             }

@@ -11,6 +11,15 @@ public class Door : MonoBehaviour
     private bool opening = true;
     private Vector3 startPos;
     private float delay = 0.0f;
+    public state doorState = state.closed;
+
+    public enum state
+    {
+        closing,
+        opening,
+        closed,
+        open
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,10 +53,10 @@ public class Door : MonoBehaviour
         }
         else
         {
-            if (opening)
+            if (delay < 3.0f)
             {
                 delay += Time.deltaTime;
-                if (delay > 1.5f)
+                if (opening)
                 {
                     opening = false;
                 }
@@ -65,6 +74,17 @@ public class Door : MonoBehaviour
     {
         get { return moving; }
         set { moving = value; }
+    }
+    
+
+    public bool isClosed()
+    {
+        return doorState == state.closed;
+    }
+
+    public bool isOpen()
+    {
+        return doorState == state.open;
     }
 
 }
