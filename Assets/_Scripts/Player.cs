@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //Adapted from Hero.cs from Chapter 30, Space SHMUP, Introduction to Game Design, Prototyping, and Development by Jeremy Gibson Bond
 public class Player : MonoBehaviour
@@ -23,11 +24,13 @@ public class Player : MonoBehaviour
     public Text healthText;
     public Text ammoText;
     public Text moneyText;
+    public Text controlPopupText;
 
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
     public float nextFire = 0;
+    public string controlPopupMessage = "";
   
 
     void Awake()
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
         ammoText.text = "Ammo : " + ammo;
         healthText.text = "Health : " + health;
+        controlPopupText.text = controlPopupMessage;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
         Vector3 moveInput = new Vector3(xAxis, 0, zAxis) * moveSpeed;
@@ -117,6 +121,9 @@ public class Player : MonoBehaviour
             healthText.text = "Health : " + health;
 
         }
+        else if (otherGO.tag == "CommandTerminal") {
+            controlPopupMessage = "Press Space to Capture Ship";
+        }
 		
 		if (health <= 0)
 		{
@@ -126,21 +133,31 @@ public class Player : MonoBehaviour
 
     }
 
+    void OnCollisionExit(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "CommandTerminal") {
+            controlPopupMessage = "";
+        }
+    }
+
     //Update this method to add player interactions with items
     void OnCollisionStay(Collision coll)
     {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space"))
-        {
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
             ammo += ammoPack;
         }
-        else if (otherGO.tag == "Key")
-        {
+        else if (otherGO.tag == "Key") {
             Destroy(otherGO);
             hasKey = true;
         }
+        else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
+            SceneManager.LoadScene("_Game_Win");
+        }
+
     }
 
 
