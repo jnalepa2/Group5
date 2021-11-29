@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
+    public float money = 0;
     public float nextFire = 0;
     public string controlPopupMessage = "";
   
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
         ammoText.text = "Ammo : " + ammo;
         healthText.text = "Health : " + health;
+        moneyText.text = "Money : " + money; 
         controlPopupText.text = controlPopupMessage;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
@@ -124,8 +126,11 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "CommandTerminal") {
             controlPopupMessage = "Press Space to Capture Ship";
         }
-		
-		if (health <= 0)
+        else if (otherGO.tag == "Scrap") {
+            controlPopupMessage = "Press Space to Pick Up Scrap";
+        }
+
+        if (health <= 0)
 		{
 			Destroy(gameObject);
 			otherGO.GetComponent<Enemy>().playerSight = false;
@@ -136,7 +141,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "CommandTerminal") {
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap") {
             controlPopupMessage = "";
         }
     }
@@ -153,6 +158,11 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "Key") {
             Destroy(otherGO);
             hasKey = true;
+        }
+        else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            controlPopupMessage = "";
+            money += 100;
         }
         else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
             SceneManager.LoadScene("_Game_Win");
