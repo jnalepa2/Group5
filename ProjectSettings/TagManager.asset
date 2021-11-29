@@ -12,6 +12,8 @@ TagManager:
   - Door
   - Key
   - LockedDoor
+  - FinalDoor
+  - Key2
   layers:
   - Default
   - TransparentFX
