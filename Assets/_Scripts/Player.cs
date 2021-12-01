@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
-    public bool hasKey = false;
+    public bool hasKey1 = false;
+    public bool hasKey2 = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
@@ -116,10 +117,10 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             health -= enemyProjectileDamage;
         }
-		
-		else if(otherGO.tag == "Enemy")
-		{
-			health -= 2;
+
+        else if (otherGO.tag == "Enemy")
+        {
+            health -= 2;
             healthText.text = "Health : " + health;
 
         }
@@ -157,7 +158,12 @@ public class Player : MonoBehaviour
         }
         else if (otherGO.tag == "Key") {
             Destroy(otherGO);
-            hasKey = true;
+            hasKey1 = true;
+        }
+        else if (otherGO.tag == "Key2")
+        {
+            Destroy(otherGO);
+            hasKey2 = true;
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
@@ -171,7 +177,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // Method to open sliding doors when the player approaches them
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Door")
@@ -181,11 +186,18 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
-        else if (other.tag == "LockedDoor" && hasKey == true)
+        else if (other.tag == "LockedDoor" && hasKey1 == true)
         {
-            if (other.GetComponent<LockedDoor>().Moving == false)
+            if (other.GetComponent<Door>().Moving == false)
             {
-                other.GetComponent<LockedDoor>().Moving = true;
+                other.GetComponent<Door>().Moving = true;
+            }
+        }
+        else if (other.tag == "FinalDoor" && hasKey2 == true)
+        {
+            if (other.GetComponent<Door>().Moving == false)
+            {
+                other.GetComponent<Door>().Moving = true;
             }
         }
     }
