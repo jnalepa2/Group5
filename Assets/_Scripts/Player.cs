@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //Adapted from Hero.cs from Chapter 30, Space SHMUP, Introduction to Game Design, Prototyping, and Development by Jeremy Gibson Bond
 public class Player : MonoBehaviour
@@ -15,7 +16,8 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
-    public bool hasKey = false;
+    public bool hasKey1 = false;
+    public bool hasKey2 = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
 
@@ -23,11 +25,14 @@ public class Player : MonoBehaviour
     public Text healthText;
     public Text ammoText;
     public Text moneyText;
+    public Text controlPopupText;
 
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
+    public float money = 0;
     public float nextFire = 0;
+    public string controlPopupMessage = "";
   
 
     void Awake()
@@ -50,6 +55,8 @@ public class Player : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
         ammoText.text = "Ammo : " + ammo;
         healthText.text = "Health : " + health;
+        moneyText.text = "Money : " + money; 
+        controlPopupText.text = controlPopupMessage;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
         Vector3 moveInput = new Vector3(xAxis, 0, zAxis) * moveSpeed;
@@ -110,15 +117,21 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             health -= enemyProjectileDamage;
         }
-		
-		else if(otherGO.tag == "Enemy")
-		{
-			health -= 2;
+
+        else if (otherGO.tag == "Enemy")
+        {
+            health -= 2;
             healthText.text = "Health : " + health;
 
         }
-		
-		if (health <= 0)
+        else if (otherGO.tag == "CommandTerminal") {
+            controlPopupMessage = "Press Space to Capture Ship";
+        }
+        else if (otherGO.tag == "Scrap") {
+            controlPopupMessage = "Press Space to Pick Up Scrap";
+        }
+
+        if (health <= 0)
 		{
 			Destroy(gameObject);
 			otherGO.GetComponent<Enemy>().playerSight = false;
@@ -126,25 +139,44 @@ public class Player : MonoBehaviour
 
     }
 
+    void OnCollisionExit(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap") {
+            controlPopupMessage = "";
+        }
+    }
+
     //Update this method to add player interactions with items
     void OnCollisionStay(Collision coll)
     {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space"))
-        {
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
             ammo += ammoPack;
         }
-        else if (otherGO.tag == "Key")
+        else if (otherGO.tag == "Key") {
+            Destroy(otherGO);
+            hasKey1 = true;
+        }
+        else if (otherGO.tag == "Key2")
         {
             Destroy(otherGO);
-            hasKey = true;
+            hasKey2 = true;
         }
+        else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            controlPopupMessage = "";
+            money += 100;
+        }
+        else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
+            SceneManager.LoadScene("_Game_Win");
+        }
+
     }
 
 
-    // Method to open sliding doors when the player approaches them
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Door")
@@ -154,11 +186,18 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
-        else if (other.tag == "LockedDoor" && hasKey == true)
+        else if (other.tag == "LockedDoor" && hasKey1 == true)
         {
-            if (other.GetComponent<LockedDoor>().Moving == false)
+            if (other.GetComponent<Door>().Moving == false)
             {
-                other.GetComponent<LockedDoor>().Moving = true;
+                other.GetComponent<Door>().Moving = true;
+            }
+        }
+        else if (other.tag == "FinalDoor" && hasKey2 == true)
+        {
+            if (other.GetComponent<Door>().Moving == false)
+            {
+                other.GetComponent<Door>().Moving = true;
             }
         }
     }

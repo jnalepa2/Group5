@@ -12,6 +12,11 @@ TagManager:
   - Door
   - Key
   - LockedDoor
+  - CommandTerminal
+  - Gun
+  - Scrap
+  - FinalDoor
+  - Key2
   layers:
   - Default
   - TransparentFX
