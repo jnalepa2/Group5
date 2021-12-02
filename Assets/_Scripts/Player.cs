@@ -16,10 +16,13 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
-    public bool hasKey1 = false;
-    public bool hasKey2 = false;
+    public bool hasKey = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
+    public GameObject damage;
+    public GameObject key;
+    public GameObject scrap;
+    public GameObject startScreen;
 
     //health, ammo and money display
     public Text healthText;
@@ -48,6 +51,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    //this is for the start screen stuff!
+    void Start()
+    {
+        Time.timeScale = 0;
+    }
+
+
     void Update()
     {
         //Move player based on keyboard input  
@@ -73,6 +83,13 @@ public class Player : MonoBehaviour
 
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg * -1 + 90;
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        
+        // this is for the start screen
+        if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            Time.timeScale = 1;
+            Destroy(startScreen);
+        }
 
         //Player can shoot with mouse button
         if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
@@ -80,6 +97,41 @@ public class Player : MonoBehaviour
             FireGun(angle);
             ammoText.text = "Ammo : " + ammo;
         }
+        //damage color will fade
+        if(damage != null)
+        {
+            if(damage.GetComponent<Image>().color.a > 0)
+            {
+                var color = damage.GetComponent<Image>().color;
+                color.a -= 0.01f;
+
+                damage.GetComponent<Image>().color = color;
+            }
+        }
+    }
+    //function for when the player takes damage to show red
+    void gotHurt()
+    {
+        var color = damage.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        damage.GetComponent<Image>().color = color;
+
+    }
+    void Scrap()
+    {
+        var color = scrap.GetComponent<Image>().color;
+        color.a = 1f;
+        scrap.GetComponent<Image>().color = color;
+
+    }
+
+    void Key()
+    {
+        var color = key.GetComponent<Image>().color;
+        color.a = 1f;
+        key.GetComponent<Image>().color = color;
+
     }
 
     void FireGun(float angle)
@@ -117,11 +169,13 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             health -= enemyProjectileDamage;
         }
-
-        else if (otherGO.tag == "Enemy")
-        {
-            health -= 2;
+		
+		else if(otherGO.tag == "Enemy")
+		{
+            gotHurt();
+			health -= 2;
             healthText.text = "Health : " + health;
+
 
         }
         else if (otherGO.tag == "CommandTerminal") {
@@ -129,15 +183,6 @@ public class Player : MonoBehaviour
         }
         else if (otherGO.tag == "Scrap") {
             controlPopupMessage = "Press Space to Pick Up Scrap";
-        }
-        else if (otherGO.tag == "Ammo") {
-            controlPopupMessage = "Press Space to Pick Up Ammo";
-        }
-        else if (otherGO.tag == "Key") {
-            controlPopupMessage = "Press Space to Pick Up Yellow Key Pad";
-        }
-        else if (otherGO.tag == "Key2") {
-            controlPopupMessage = "Press Space to Pick Up Orange Key Pad";
         }
 
         if (health <= 0)
@@ -151,7 +196,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2") {
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap") {
             controlPopupMessage = "";
         }
     }
@@ -163,24 +208,18 @@ public class Player : MonoBehaviour
 
         if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
-            controlPopupMessage = "";
             ammo += ammoPack;
         }
-        else if (otherGO.tag == "Key" && Input.GetKeyDown("space")) {
+        else if (otherGO.tag == "Key") {
             Destroy(otherGO);
-            controlPopupMessage = "";
-            hasKey1 = true;
-        }
-        else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
-        {
-            Destroy(otherGO);
-            controlPopupMessage = "";
-            hasKey2 = true;
+            hasKey = true;
+            Key();
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
             controlPopupMessage = "";
             money += 100;
+            Scrap();
         }
         else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
             SceneManager.LoadScene("_Game_Win");
@@ -189,6 +228,7 @@ public class Player : MonoBehaviour
     }
 
 
+    // Method to open sliding doors when the player approaches them
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Door")
@@ -198,18 +238,11 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
-        else if (other.tag == "LockedDoor" && hasKey1 == true)
+        else if (other.tag == "LockedDoor" && hasKey == true)
         {
-            if (other.GetComponent<Door>().Moving == false)
+            if (other.GetComponent<LockedDoor>().Moving == false)
             {
-                other.GetComponent<Door>().Moving = true;
-            }
-        }
-        else if (other.tag == "FinalDoor" && hasKey2 == true)
-        {
-            if (other.GetComponent<Door>().Moving == false)
-            {
-                other.GetComponent<Door>().Moving = true;
+                other.GetComponent<LockedDoor>().Moving = true;
             }
         }
     }
