@@ -117,12 +117,21 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             health -= enemyProjectileDamage;
         }
+<<<<<<< HEAD
 
         else if (otherGO.tag == "Enemy")
         {
             health -= 2;
             healthText.text = "Health : " + health;
 
+=======
+		
+		else if(otherGO.tag == "Enemy")
+		{
+			health -= 2;
+            healthText.text = "Health : " + health;
+
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
         }
         else if (otherGO.tag == "CommandTerminal") {
             controlPopupMessage = "Press Space to Capture Ship";
@@ -174,8 +183,12 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
             Destroy(otherGO);
+<<<<<<< HEAD
             controlPopupMessage = "";
             hasKey2 = true;
+=======
+            hasKey = true;
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);

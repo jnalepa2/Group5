@@ -1906,6 +1906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 424409688}
   camY: 0
+<<<<<<< HEAD
 --- !u!1 &555198981 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5713472857336273956, guid: 87113814f0de467468757118bc151373,
@@ -1931,6 +1932,8 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 340110749}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1001 &602126326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3171,6 +3174,7 @@ MeshFilter:
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1100300307
 =======
 --- !u!1 &1041585642 stripped
@@ -3317,6 +3321,8 @@ CanvasRenderer:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd0904d20ed0b964d95c4ecbd66db9bb, type: 3}
 >>>>>>> parent of e028ba8 (Merge branch 'Mike2' into Sprint2_MWeiner)
+=======
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!4 &1130022852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3289067408589441237, guid: 698b2a0e6372d63479391308e51d3976,
@@ -3947,6 +3953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb8b01b9f0d6d874c96a3fb768ba77ae, type: 3}
+<<<<<<< HEAD
 --- !u!1 &1259541976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4060,6 +4067,8 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1440854115}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1001 &1304533350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4664,6 +4673,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5842009364114782149, guid: 687616b5672e46a49bbe0a2243d63034,
     type: 3}
   m_PrefabInstance: {fileID: 1390953291}
+<<<<<<< HEAD
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4759,6 +4769,9 @@ CanvasRenderer:
 >>>>>>> parent of bec2c8e (All enemies converted to new vision system)
 =======
 >>>>>>> parent of e028ba8 (Merge branch 'Mike2' into Sprint2_MWeiner)
+=======
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1 &1425698994
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,8 +5110,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+<<<<<<< HEAD
   m_SourcePrefab: {fileID: 100100000, guid: 5c9c61636bbefdf4889d01f2f490c8dd, type: 3}
 >>>>>>> parent of e028ba8 (Merge branch 'Mike2' into Sprint2_MWeiner)
+=======
+  m_SourcePrefab: {fileID: 100100000, guid: 87113814f0de467468757118bc151373, type: 3}
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1001 &1527672419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6544,6 +6561,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 698b2a0e6372d63479391308e51d3976, type: 3}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1775838077
 GameObject:
   m_ObjectHideFlags: 0
@@ -6695,6 +6713,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60f1134c0811c2c41945567d786e414d, type: 3}
+=======
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1001 &1814395485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7719,6 +7739,7 @@ PrefabInstance:
 <<<<<<< HEAD
   m_SourcePrefab: {fileID: 100100000, guid: 698b2a0e6372d63479391308e51d3976, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &2135746042
 GameObject:
   m_ObjectHideFlags: 0
@@ -7799,6 +7820,8 @@ CanvasRenderer:
   m_CullTransparentMesh: 0
 =======
 >>>>>>> parent of bec2c8e (All enemies converted to new vision system)
+=======
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
 --- !u!1001 &1949641712868252526
 =======
   m_SourcePrefab: {fileID: 100100000, guid: cd0904d20ed0b964d95c4ecbd66db9bb, type: 3}
@@ -7903,10 +7926,14 @@ PrefabInstance:
       propertyPath: key
       value: 
 <<<<<<< HEAD
+<<<<<<< HEAD
       objectReference: {fileID: 388936051}
 =======
       objectReference: {fileID: 0}
 >>>>>>> parent of bec2c8e (All enemies converted to new vision system)
+=======
+      objectReference: {fileID: 0}
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
     - target: {fileID: 1949641713093402433, guid: d6a010de9bad34944817690e7b95fdc8,
 =======
       propertyPath: m_LocalRotation.z
@@ -7915,6 +7942,7 @@ PrefabInstance:
     - target: {fileID: 4235298500736318290, guid: 60f1134c0811c2c41945567d786e414d,
 >>>>>>> parent of e028ba8 (Merge branch 'Mike2' into Sprint2_MWeiner)
         type: 3}
+<<<<<<< HEAD
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -7953,6 +7981,11 @@ PrefabInstance:
       propertyPath: ammoPack
       value: 5
       objectReference: {fileID: 0}
+=======
+      propertyPath: controlPopupText
+      value: 
+      objectReference: {fileID: 452146248}
+>>>>>>> parent of 57ed346 (Mikes changes to the wrong branch :()
     - target: {fileID: 1949641713093402435, guid: d6a010de9bad34944817690e7b95fdc8,
         type: 3}
 >>>>>>> parent of bec2c8e (All enemies converted to new vision system)
