@@ -133,6 +133,12 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "Ammo") {
             controlPopupMessage = "Press Space to Pick Up Ammo";
         }
+        else if (otherGO.tag == "Key") {
+            controlPopupMessage = "Press Space to Pick Up Yellow Key Pad";
+        }
+        else if (otherGO.tag == "Key2") {
+            controlPopupMessage = "Press Space to Pick Up Orange Key Pad";
+        }
 
         if (health <= 0)
 		{
@@ -145,7 +151,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo") {
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2") {
             controlPopupMessage = "";
         }
     }
@@ -160,13 +166,15 @@ public class Player : MonoBehaviour
             controlPopupMessage = "";
             ammo += ammoPack;
         }
-        else if (otherGO.tag == "Key") {
+        else if (otherGO.tag == "Key" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
+            controlPopupMessage = "";
             hasKey1 = true;
         }
-        else if (otherGO.tag == "Key2")
+        else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
             Destroy(otherGO);
+            controlPopupMessage = "";
             hasKey2 = true;
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
