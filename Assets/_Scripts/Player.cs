@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //Adapted from Hero.cs from Chapter 30, Space SHMUP, Introduction to Game Design, Prototyping, and Development by Jeremy Gibson Bond
 public class Player : MonoBehaviour
@@ -15,19 +16,27 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
-    public bool hasKey = false;
+    public bool hasKey1 = false;
+    public bool hasKey2 = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
+    public GameObject damage;
+    public GameObject key;
+    public GameObject scrap;
+    public GameObject startScreen;
 
     //health, ammo and money display
     public Text healthText;
     public Text ammoText;
     public Text moneyText;
+    public Text controlPopupText;
 
     [Header("Set Dynamically")]
     public float health = 20;
     public float ammo = 20;
+    public float money = 0;
     public float nextFire = 0;
+    public string controlPopupMessage = "";
   
 
     void Awake()
@@ -43,6 +52,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    //this is for the start screen stuff!
+    void Start()
+    {
+        Time.timeScale = 0;
+    }
+
+
     void Update()
     {
         //Move player based on keyboard input  
@@ -50,6 +66,8 @@ public class Player : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
         ammoText.text = "Ammo : " + ammo;
         healthText.text = "Health : " + health;
+        moneyText.text = "Money : " + money; 
+        controlPopupText.text = controlPopupMessage;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
         Vector3 moveInput = new Vector3(xAxis, 0, zAxis) * moveSpeed;
@@ -66,6 +84,13 @@ public class Player : MonoBehaviour
 
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg * -1 + 90;
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        
+        // this is for the start screen
+        if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            Time.timeScale = 1;
+            Destroy(startScreen);
+        }
 
         //Player can shoot with mouse button
         if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
@@ -73,6 +98,41 @@ public class Player : MonoBehaviour
             FireGun(angle);
             ammoText.text = "Ammo : " + ammo;
         }
+        //damage color will fade
+        if(damage != null)
+        {
+            if(damage.GetComponent<Image>().color.a > 0)
+            {
+                var color = damage.GetComponent<Image>().color;
+                color.a -= 0.01f;
+
+                damage.GetComponent<Image>().color = color;
+            }
+        }
+    }
+    //function for when the player takes damage to show red
+    void gotHurt()
+    {
+        var color = damage.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        damage.GetComponent<Image>().color = color;
+
+    }
+    void Scrap()
+    {
+        var color = scrap.GetComponent<Image>().color;
+        color.a = 1f;
+        scrap.GetComponent<Image>().color = color;
+
+    }
+
+    void Key()
+    {
+        var color = key.GetComponent<Image>().color;
+        color.a = 1f;
+        key.GetComponent<Image>().color = color;
+
     }
 
     void FireGun(float angle)
@@ -110,15 +170,33 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             health -= enemyProjectileDamage;
         }
+
 		
 		else if(otherGO.tag == "Enemy")
 		{
+            gotHurt();
 			health -= 2;
             healthText.text = "Health : " + health;
 
+
         }
-		
-		if (health <= 0)
+        else if (otherGO.tag == "CommandTerminal") {
+            controlPopupMessage = "Press Space to Capture Ship";
+        }
+        else if (otherGO.tag == "Scrap") {
+            controlPopupMessage = "Press Space to Pick Up Scrap";
+        }
+        else if (otherGO.tag == "Ammo") {
+            controlPopupMessage = "Press Space to Pick Up Ammo";
+        }
+        else if (otherGO.tag == "Key") {
+            controlPopupMessage = "Press Space to Pick Up Yellow Key Pad";
+        }
+        else if (otherGO.tag == "Key2") {
+            controlPopupMessage = "Press Space to Pick Up Orange Key Pad";
+        }
+
+        if (health <= 0)
 		{
 			Destroy(gameObject);
 			otherGO.GetComponent<Enemy>().playerSight = false;
@@ -126,25 +204,51 @@ public class Player : MonoBehaviour
 
     }
 
+    void OnCollisionExit(Collision coll) {
+        GameObject otherGO = coll.gameObject;
+
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2") {
+            controlPopupMessage = "";
+        }
+    }
+
     //Update this method to add player interactions with items
     void OnCollisionStay(Collision coll)
     {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space"))
-        {
+        if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
+            controlPopupMessage = "";
             ammo += ammoPack;
         }
-        else if (otherGO.tag == "Key")
+        else if (otherGO.tag == "Key" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            controlPopupMessage = "";
+            hasKey1 = true;
+        }
+        else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
             Destroy(otherGO);
-            hasKey = true;
+
+            controlPopupMessage = "";
+            hasKey2 = true;
+            Key();
+
         }
+        else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
+            Destroy(otherGO);
+            controlPopupMessage = "";
+            money += 100;
+            Scrap();
+        }
+        else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
+            SceneManager.LoadScene("_Game_Win");
+        }
+
     }
 
 
-    // Method to open sliding doors when the player approaches them
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Door")
@@ -154,11 +258,18 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
-        else if (other.tag == "LockedDoor" && hasKey == true)
+        else if (other.tag == "LockedDoor" && hasKey1 == true)
         {
-            if (other.GetComponent<LockedDoor>().Moving == false)
+            if (other.GetComponent<Door>().Moving == false)
             {
-                other.GetComponent<LockedDoor>().Moving = true;
+                other.GetComponent<Door>().Moving = true;
+            }
+        }
+        else if (other.tag == "FinalDoor" && hasKey2 == true)
+        {
+            if (other.GetComponent<Door>().Moving == false)
+            {
+                other.GetComponent<Door>().Moving = true;
             }
         }
     }

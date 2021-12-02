@@ -141,13 +141,20 @@ MonoBehaviour:
   projectileForce: 1000
   enemyProjectileDamage: 5
   fireRate: 1
-  ammoPack: 10
+  ammoPack: 5
+  hasKey: 0
   projectilePrefab: {fileID: 8483127831216495397, guid: e74d033fb9b6ec44f817046ab1e97e56,
     type: 3}
   gunEnd: {fileID: 1949641712348536427}
-  health: 20
-  ammo: 20
+  healthText: {fileID: 0}
+  ammoText: {fileID: 0}
+  moneyText: {fileID: 0}
+  controlPopupText: {fileID: 0}
+  health: 10
+  ammo: 10
+  money: 0
   nextFire: 0
+  controlPopupMessage: 
 --- !u!54 &1949641713093402462
 Rigidbody:
   m_ObjectHideFlags: 0
