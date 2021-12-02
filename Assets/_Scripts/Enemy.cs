@@ -92,6 +92,8 @@ public class Enemy : MonoBehaviour
 			}
 			else if(visionZone.GetComponent<EnemySight>().IsIn())
 				playerSight = true;
+			else
+				playerSight = false;
 	}
 	
 	void moveToPlayer(){
