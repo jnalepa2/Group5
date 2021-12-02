@@ -130,6 +130,9 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "Scrap") {
             controlPopupMessage = "Press Space to Pick Up Scrap";
         }
+        else if (otherGO.tag == "Ammo") {
+            controlPopupMessage = "Press Space to Pick Up Ammo";
+        }
 
         if (health <= 0)
 		{
@@ -142,7 +145,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap") {
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo") {
             controlPopupMessage = "";
         }
     }
@@ -154,6 +157,7 @@ public class Player : MonoBehaviour
 
         if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
+            controlPopupMessage = "";
             ammo += ammoPack;
         }
         else if (otherGO.tag == "Key") {
