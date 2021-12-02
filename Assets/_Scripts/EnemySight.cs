@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EnemySight : MonoBehaviour
 {
-	private bool playerIsIn;
+	public bool playerIsIn;
     // Start is called before the first frame update
     void Start()
     {
         playerIsIn = false;
     }
 
-    void OnCollisionEnter( Collision coll )
+    void OnTriggerEnter( Collider coll )
 	{
 		GameObject collidedWith = coll.gameObject;
 		
@@ -20,7 +20,7 @@ public class EnemySight : MonoBehaviour
 		
 	}
 	
-	void OnCollisionExit( Collision coll )
+	void OnTriggerExit( Collider coll )
 	{
 		GameObject collidedWith = coll.gameObject;
 		
