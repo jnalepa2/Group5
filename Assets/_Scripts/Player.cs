@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
     public bool hasKey2 = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
+	
+	public GameObject damage;
+    public GameObject key;
+    public GameObject scrap;
+    public GameObject startScreen;
 
     //health, ammo and money display
     public Text healthText;
@@ -34,6 +39,10 @@ public class Player : MonoBehaviour
     public float nextFire = 0;
     public string controlPopupMessage = "";
   
+	void Start()
+    {
+        Time.timeScale = 0;
+    }
 
     void Awake()
     {
@@ -50,6 +59,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+		if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            Time.timeScale = 1;
+            Destroy(startScreen);
+        }
+		
         //Move player based on keyboard input  
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
@@ -79,6 +94,18 @@ public class Player : MonoBehaviour
         {
             FireGun(angle);
             ammoText.text = "Ammo : " + ammo;
+        }
+		
+		//damage color will fade
+        if(damage != null)
+        {
+            if(damage.GetComponent<Image>().color.a > 0)
+            {
+                var color = damage.GetComponent<Image>().color;
+                color.a -= 0.01f;
+
+                damage.GetComponent<Image>().color = color;
+            }
         }
     }
 
@@ -116,12 +143,14 @@ public class Player : MonoBehaviour
         {
             Destroy(otherGO);
             health -= enemyProjectileDamage;
+			gotHurt();
         }
 
         else if (otherGO.tag == "Enemy")
         {
             health -= 2;
             healthText.text = "Health : " + health;
+			gotHurt();
 
         }
         else if (otherGO.tag == "CommandTerminal") {
@@ -212,5 +241,30 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
+    }
+	
+	//function for when the player takes damage to show red
+    void gotHurt()
+    {
+        var color = damage.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        damage.GetComponent<Image>().color = color;
+
+    }
+    void Scrap()
+    {
+        var color = scrap.GetComponent<Image>().color;
+        color.a = 1f;
+        scrap.GetComponent<Image>().color = color;
+
+    }
+
+    void Key()
+    {
+        var color = key.GetComponent<Image>().color;
+        color.a = 1f;
+        key.GetComponent<Image>().color = color;
+
     }
 }
