@@ -20,7 +20,8 @@ public class Player : MonoBehaviour
     public bool hasKey2 = false;
     public GameObject projectilePrefab;
     public GameObject gunEnd;
-    public GameObject damage;
+	
+	public GameObject damage;
     public GameObject key;
     public GameObject scrap;
     public GameObject startScreen;
@@ -38,6 +39,10 @@ public class Player : MonoBehaviour
     public float nextFire = 0;
     public string controlPopupMessage = "";
   
+	void Start()
+    {
+        Time.timeScale = 0;
+    }
 
     void Awake()
     {
@@ -52,15 +57,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    //this is for the start screen stuff!
-    void Start()
-    {
-        Time.timeScale = 0;
-    }
-
-
     void Update()
     {
+		if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
+        {
+            Time.timeScale = 1;
+            Destroy(startScreen);
+        }
+		
         //Move player based on keyboard input  
         float xAxis = Input.GetAxis("Horizontal");
         float zAxis = Input.GetAxis("Vertical");
@@ -84,13 +88,6 @@ public class Player : MonoBehaviour
 
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg * -1 + 90;
         transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
-        
-        // this is for the start screen
-        if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
-        {
-            Time.timeScale = 1;
-            Destroy(startScreen);
-        }
 
         //Player can shoot with mouse button
         if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
@@ -98,7 +95,8 @@ public class Player : MonoBehaviour
             FireGun(angle);
             ammoText.text = "Ammo : " + ammo;
         }
-        //damage color will fade
+		
+		//damage color will fade
         if(damage != null)
         {
             if(damage.GetComponent<Image>().color.a > 0)
@@ -109,30 +107,6 @@ public class Player : MonoBehaviour
                 damage.GetComponent<Image>().color = color;
             }
         }
-    }
-    //function for when the player takes damage to show red
-    void gotHurt()
-    {
-        var color = damage.GetComponent<Image>().color;
-        color.a = 0.8f;
-
-        damage.GetComponent<Image>().color = color;
-
-    }
-    void Scrap()
-    {
-        var color = scrap.GetComponent<Image>().color;
-        color.a = 1f;
-        scrap.GetComponent<Image>().color = color;
-
-    }
-
-    void Key()
-    {
-        var color = key.GetComponent<Image>().color;
-        color.a = 1f;
-        key.GetComponent<Image>().color = color;
-
     }
 
     void FireGun(float angle)
@@ -169,15 +143,14 @@ public class Player : MonoBehaviour
         {
             Destroy(otherGO);
             health -= enemyProjectileDamage;
+			gotHurt();
         }
 
-		
-		else if(otherGO.tag == "Enemy")
-		{
-            gotHurt();
-			health -= 2;
+        else if (otherGO.tag == "Enemy")
+        {
+            health -= 2;
             healthText.text = "Health : " + health;
-
+			gotHurt();
 
         }
         else if (otherGO.tag == "CommandTerminal") {
@@ -230,17 +203,13 @@ public class Player : MonoBehaviour
         else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
             Destroy(otherGO);
-
             controlPopupMessage = "";
             hasKey2 = true;
-            Key();
-
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
             controlPopupMessage = "";
             money += 100;
-            Scrap();
         }
         else if (otherGO.tag == "CommandTerminal" && Input.GetKeyDown("space")) {
             SceneManager.LoadScene("_Game_Win");
@@ -272,5 +241,30 @@ public class Player : MonoBehaviour
                 other.GetComponent<Door>().Moving = true;
             }
         }
+    }
+	
+	//function for when the player takes damage to show red
+    void gotHurt()
+    {
+        var color = damage.GetComponent<Image>().color;
+        color.a = 0.8f;
+
+        damage.GetComponent<Image>().color = color;
+
+    }
+    void Scrap()
+    {
+        var color = scrap.GetComponent<Image>().color;
+        color.a = 1f;
+        scrap.GetComponent<Image>().color = color;
+
+    }
+
+    void Key()
+    {
+        var color = key.GetComponent<Image>().color;
+        color.a = 1f;
+        key.GetComponent<Image>().color = color;
+
     }
 }
