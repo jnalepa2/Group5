@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 99431105}
   - component: {fileID: 99431104}
   m_Layer: 0
-  m_Name: Flashlight
+  m_Name: LivesRemaining
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7620,23 +7620,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 914698127}
     m_Modifications:
-    - target: {fileID: 114205404839026754, guid: cf39d112c34e9044f89fa8ec8118855c,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: endPos.x
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114205404839026754, guid: cf39d112c34e9044f89fa8ec8118855c,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: endPos.y
       value: 0.9
       objectReference: {fileID: 0}
-    - target: {fileID: 114205404839026754, guid: cf39d112c34e9044f89fa8ec8118855c,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: endPos.z
       value: 42.28
       objectReference: {fileID: 0}
-    - target: {fileID: 114205404839026754, guid: cf39d112c34e9044f89fa8ec8118855c,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
@@ -7717,7 +7713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
-    - {fileID: 114205404839026754, guid: cf39d112c34e9044f89fa8ec8118855c, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: cf39d112c34e9044f89fa8ec8118855c, type: 3}
 --- !u!1001 &7135208957844331695
 PrefabInstance:
