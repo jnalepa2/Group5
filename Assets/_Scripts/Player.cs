@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public GameObject key;
     public GameObject scrap;
     public GameObject startScreen;
+    public HandleDeath handleDeath;
 
     //health, ammo and money display
     public Text healthText;
@@ -36,12 +37,15 @@ public class Player : MonoBehaviour
     public float health = 20;
     public float ammo = 20;
     public float money = 0;
+    public int livesRemaining = 2;
     public float nextFire = 0;
     public string controlPopupMessage = "";
   
 	void Start()
     {
-        Time.timeScale = 0;
+        if (livesRemaining == 2) {
+            Time.timeScale = 0;
+        }
     }
 
     void Awake()
@@ -148,10 +152,11 @@ public class Player : MonoBehaviour
 
         else if (otherGO.tag == "Enemy")
         {
+            if (health > 2) {
+                gotHurt();
+            }
             health -= 2;
             healthText.text = "Health : " + health;
-			gotHurt();
-
         }
         else if (otherGO.tag == "CommandTerminal") {
             controlPopupMessage = "Press Space to Capture Ship";
@@ -169,11 +174,20 @@ public class Player : MonoBehaviour
             controlPopupMessage = "Press Space to Pick Up Orange Key Pad";
         }
 
-        if (health <= 0)
+        if (health <= 0 && livesRemaining == 0)
 		{
 			Destroy(gameObject);
-			otherGO.GetComponent<Enemy>().playerSight = false;
+            handleDeath.DeathLoadScene();
+            otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
 		}
+        else if (health <= 0 && livesRemaining > 0) {
+            health = livesRemaining * 4;
+            ammo += livesRemaining * 2;
+            livesRemaining -= 1;
+            otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
+            handleDeath.StartNextLife();
+            gameObject.transform.position = new Vector3(0, 1.5f, 0);
+        }
 
     }
 
