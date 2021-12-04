@@ -6,7 +6,10 @@ public class Enemy : MonoBehaviour
 {
 	[Header("Set in Inspector")]
     public float speed = 30;
-	public float sightRange = 20;
+	public bool canMove = true;
+	public bool canShoot = false;
+	public GameObject visionZone;
+	//public GameObject additionalVision;
 	
 	[Header("Set Dynamically")]
 	public float health = 3;
@@ -29,20 +32,20 @@ public class Enemy : MonoBehaviour
 		{
 				detectPlayer();
 			
-				if(playerSight == true){
-					moveToPlayer();
+				if(canMove){
+					if(playerSight == true){
+						moveToPlayer();
+					}
+					else{
+						returnToStart();
+					}
 				}
-				else{
-					returnToStart();
-				}
-			
 		}
     }
 	
 	void FixedUpdate()
 	{
-		GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
-		if(Players == null)			thePlayer = null;
+		
 	}
 	
 	IEnumerator OnCollisionStay( Collision coll ) {
@@ -88,12 +91,16 @@ public class Enemy : MonoBehaviour
 				playerSight = false;
 				return;
 			}
-			float distance = Vector3.Distance(thePlayer.transform.position, transform.position);
 			
-			if( distance < sightRange )
-			{ playerSight = true; }
-			else 
-			{ playerSight = false; }
+			else if(visionZone.GetComponent<EnemySight>().IsIn())
+			{
+				playerSight = true;
+			}
+			
+			else
+			{
+				playerSight = false;
+			}
 	}
 	
 	void moveToPlayer(){
