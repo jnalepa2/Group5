@@ -178,13 +178,13 @@ public class Player : MonoBehaviour
 		{
 			Destroy(gameObject);
             handleDeath.DeathLoadScene();
-            otherGO.GetComponent<Enemy>().playerSight = false;
+            otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
 		}
         else if (health <= 0 && livesRemaining > 0) {
             health = livesRemaining * 4;
             ammo += livesRemaining * 2;
             livesRemaining -= 1;
-            otherGO.GetComponent<Enemy>().playerSight = false;
+            otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
             handleDeath.StartNextLife();
             gameObject.transform.position = new Vector3(0, 1.5f, 0);
         }
