@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float enemyProjectileDamage = 5;
     public float fireRate = 2;
     public float ammoPack = 10;
+    public int livesRemaining = 2;
     public bool hasKey1 = false;
     public bool hasKey2 = false;
     public GameObject projectilePrefab;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     public GameObject key;
     public GameObject scrap;
     public GameObject startScreen;
+    public HandleDeath handleDeath;
 
     //health, ammo and money display
     public Text healthText;
@@ -41,7 +43,9 @@ public class Player : MonoBehaviour
   
 	void Start()
     {
-        Time.timeScale = 0;
+        if (livesRemaining == 2) {
+            Time.timeScale = 0;
+        }
     }
 
     void Awake()
@@ -172,7 +176,8 @@ public class Player : MonoBehaviour
         if (health <= 0)
 		{
 			Destroy(gameObject);
-			otherGO.GetComponent<Enemy>().playerSight = false;
+            handleDeath.DeathLoadScene(livesRemaining);
+            otherGO.GetComponent<Enemy>().playerSight = false;
 		}
 
     }
