@@ -20,6 +20,7 @@ public class Projectile : MonoBehaviour
         else if (otherGO.tag == "Box")
         {
             Destroy(otherGO);
+            Destroy(gameObject);
         }
     }
 }
