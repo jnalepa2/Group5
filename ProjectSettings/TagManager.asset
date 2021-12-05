@@ -17,6 +17,7 @@ TagManager:
   - Scrap
   - FinalDoor
   - Key2
+  - Box
   layers:
   - Default
   - TransparentFX
