@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-
+	public GameObject firingTarget;
+	
     void OnTriggerEnter(Collider coll) {
         GameObject otherGO = coll.gameObject;
 

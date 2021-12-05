@@ -181,10 +181,14 @@ public class Player : MonoBehaviour
             otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
 		}
         else if (health <= 0 && livesRemaining > 0) {
-            health = livesRemaining * 4;
+			health = livesRemaining * 4;
             ammo += livesRemaining * 2;
             livesRemaining -= 1;
-            otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
+			if(otherGO.GetComponent<Enemy>() != null)
+					otherGO.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
+			else if(otherGO.GetComponent<EnemyProjectile>() != null)
+				otherGO.GetComponent<EnemyProjectile>().firingTarget.GetComponent<Enemy>().visionZone.GetComponent<EnemySight>().playerIsIn = false;
+			
             handleDeath.StartNextLife();
             gameObject.transform.position = new Vector3(0, 1.5f, 0);
         }
