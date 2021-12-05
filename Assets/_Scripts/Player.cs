@@ -146,8 +146,11 @@ public class Player : MonoBehaviour
         if (otherGO.tag == "ProjectileEnemy")
         {
             Destroy(otherGO);
+			if (health > 5) {
+				gotHurt();
+            }
             health -= enemyProjectileDamage;
-			gotHurt();
+			
         }
 
         else if (otherGO.tag == "Enemy")
@@ -156,7 +159,6 @@ public class Player : MonoBehaviour
                 gotHurt();
             }
             health -= 2;
-            healthText.text = "Health : " + health;
         }
         else if (otherGO.tag == "CommandTerminal") {
             controlPopupMessage = "Press Space to Capture Ship";
