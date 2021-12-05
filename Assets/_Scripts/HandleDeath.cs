@@ -5,21 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class HandleDeath : MonoBehaviour
 {
+    [Header("Set in Inspector")]
+    public GameObject player;
 
-    public void DeathLoadScene(int livesRemaining) {
-        if (livesRemaining == 2) {
-            StartCoroutine(WaitToLoad("_Scene_1"));
-        }
-        else if (livesRemaining == 1) {
-            StartCoroutine(WaitToLoad("_Scene_2"));
-        }
-        else {
-            StartCoroutine(WaitToLoad("_Game_Lose"));
-        }
+    public void DeathLoadScene() {
+        StartCoroutine(WaitToLoad("_Game_Lose"));
+    }
+
+    public void StartNextLife() {
+        StartCoroutine(WaitToStartNextLife());
     }
 
     private IEnumerator WaitToLoad(string scene) {
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(scene);
+    }
+
+    private IEnumerator WaitToStartNextLife() {
+        player.SetActive(false);
+        yield return new WaitForSeconds(2);
+        player.SetActive(true);
     }
 }
