@@ -17,5 +17,10 @@ public class Projectile : MonoBehaviour
 			
 			otherGO.GetComponent<Enemy>().takeDamage();
         }
+        else if (otherGO.tag == "Box")
+        {
+            Destroy(otherGO);
+            Destroy(gameObject);
+        }
     }
 }
