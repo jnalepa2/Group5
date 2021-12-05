@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 	public bool canMove = true;
 	public bool canShoot = false;
 	public GameObject visionZone;
+	public GameObject additionalVision;
 	
 	[Header("Set Dynamically")]
 	public float health = 3;
@@ -90,7 +91,8 @@ public class Enemy : MonoBehaviour
 				playerSight = false;
 				return;
 			}
-			else if(visionZone.GetComponent<EnemySight>().IsIn())
+			else if( (visionZone.GetComponent<EnemySight>().IsIn()) || ( (additionalVision != null) && additionalVision.GetComponent<EnemySight>().IsIn()) )
+			{
 				playerSight = true;
 			else
 				playerSight = false;
