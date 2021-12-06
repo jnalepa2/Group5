@@ -9,12 +9,16 @@ public class Enemy : MonoBehaviour
 	public bool canMove = true;
 	public bool canShoot = false;
 	public GameObject visionZone;
-	//public GameObject additionalVision;
+	public GameObject additionalVision;
+	public float fireRate = 2;
+	public float projectileForce = 500;
+	public GameObject projectilePrefab;
 	
 	[Header("Set Dynamically")]
 	public float health = 3;
 	public bool alive = true;				//Used to set the enemy to active or inactive so it behaves better
 	public bool playerSight = false;		//If the player is in range of vision
+	public float nextFire = 0;
 	
 	private GameObject thePlayer;
 	private Vector3 enemyStartPos;
@@ -33,20 +37,49 @@ public class Enemy : MonoBehaviour
 				detectPlayer();
 			
 				if(canMove){
-					if(playerSight == true){
+					if(playerSight){
 						moveToPlayer();
 					}
 					else{
 						returnToStart();
 					}
 				}
+				
+				if(canShoot)
+				{
+					if(playerSight)
+					{
+						if (Time.time > nextFire)
+						{
+							//update time
+							nextFire = Time.time + fireRate;
+							
+							Vector3 pos = transform.position;
+
+							GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+							projGO.GetComponent<EnemyProjectile>().firingTarget = gameObject;
+							
+							projGO.transform.position = transform.position;
+							
+							Vector3 direction = -( pos - thePlayer.transform.position );
+							//place the newly created projectile at the end of the player's gun
+
+							//rotate the projectile to point toward direction of aiming
+							//projGO.transform.Rotate(0, angle, 0);
+
+							//apply force to projectile to fire it
+							Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+							rigidB.AddRelativeForce(direction * projectileForce);
+						}
+					}
+				}
 		}
     }
 	
-	void FixedUpdate()
-	{
-		
-	}
+	void FireGun(float angle)
+    {
+            
+    }
 	
 	IEnumerator OnCollisionStay( Collision coll ) {
 		GameObject collidedWith = coll.gameObject;
@@ -67,8 +100,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 	
-	IEnumerator OnCollisionEnter( Collision coll )
-	{
+	IEnumerator OnCollisionEnter( Collision coll ){
 		GameObject collidedWith = coll.gameObject;
 		if ( collidedWith.tag != "Ground" )
 		{
@@ -91,16 +123,12 @@ public class Enemy : MonoBehaviour
 				playerSight = false;
 				return;
 			}
-			
-			else if(visionZone.GetComponent<EnemySight>().IsIn())
+			else if( (visionZone.GetComponent<EnemySight>().IsIn()) || ( (additionalVision != null) && additionalVision.GetComponent<EnemySight>().IsIn()) )
 			{
 				playerSight = true;
 			}
-			
 			else
-			{
 				playerSight = false;
-			}
 	}
 	
 	void moveToPlayer(){
@@ -131,8 +159,7 @@ public class Enemy : MonoBehaviour
         transform.position = current;
 	}
 	
-	public void takeDamage()
-	{
+	public void takeDamage(){
 		this.health -= 8;
 		if(health <= 0)		alive = false;
 		if(!alive)			Destroy(gameObject);
