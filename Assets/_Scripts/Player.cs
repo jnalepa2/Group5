@@ -22,7 +22,8 @@ public class Player : MonoBehaviour
     public GameObject gunEnd;
 	
 	public GameObject damage;
-    public GameObject key;
+    public GameObject key1;
+    public GameObject key2;
     public GameObject scrap;
     public GameObject startScreen;
     public HandleDeath handleDeath;
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
     public Text healthText;
     public Text ammoText;
     public Text moneyText;
+    public Text livesText;
     public Text controlPopupText;
 
     [Header("Set Dynamically")]
@@ -74,7 +76,8 @@ public class Player : MonoBehaviour
         float zAxis = Input.GetAxis("Vertical");
         ammoText.text = "Ammo : " + ammo;
         healthText.text = "Health : " + health;
-        moneyText.text = "Money : " + money; 
+        moneyText.text = "Money : " + money;
+        livesText.text = "Lives : " + livesRemaining;
         controlPopupText.text = controlPopupMessage;
 
         //use rigid body forces to move player to prevent player from moving through walls and other objects.
@@ -152,6 +155,16 @@ public class Player : MonoBehaviour
             health -= enemyProjectileDamage;
 			
         }
+        else if (otherGO.tag == "LockedDoor" && hasKey1 == false)
+        {
+            controlPopupMessage = "This door is locked";
+
+        }
+        else if (otherGO.tag == "FinalDoor" && hasKey2 == false)
+        {
+            controlPopupMessage = "This door is locked";
+
+        }
 
         else if (otherGO.tag == "Enemy")
         {
@@ -200,7 +213,7 @@ public class Player : MonoBehaviour
     void OnCollisionExit(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2") {
+        if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2" || otherGO.tag == "LockedDoor" || otherGO.tag == "FinalDoor") {
             controlPopupMessage = "";
         }
     }
@@ -219,12 +232,14 @@ public class Player : MonoBehaviour
             Destroy(otherGO);
             controlPopupMessage = "";
             hasKey1 = true;
+            Key1();
         }
         else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
             Destroy(otherGO);
             controlPopupMessage = "";
             hasKey2 = true;
+            Key2();
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
@@ -280,11 +295,18 @@ public class Player : MonoBehaviour
 
     }
 
-    void Key()
+    void Key1()
     {
-        var color = key.GetComponent<Image>().color;
+        var color = key1.GetComponent<Image>().color;
         color.a = 1f;
-        key.GetComponent<Image>().color = color;
+        key1.GetComponent<Image>().color = color;
+
+    }
+    void Key2()
+    {
+        var color = key2.GetComponent<Image>().color;
+        color.a = 1f;
+        key2.GetComponent<Image>().color = color;
 
     }
 }
