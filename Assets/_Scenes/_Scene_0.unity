@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.1
+  m_AmbientIntensity: 0.15
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -1261,13 +1261,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.24192187, y: 0, z: 0, w: 0.9702957}
-  m_LocalPosition: {x: 0, y: 4, z: -2}
+  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 746198622}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 28, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!1 &178527173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4387,7 +4387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851191716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25116995, y: 1.5, z: 60.38311}
+  m_LocalPosition: {x: 0.25116995, y: 0.6, z: 60.38311}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 373457240}
@@ -5995,7 +5995,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.2, y: 6.2736206}
+  m_AnchoredPosition: {x: -2.2000122, y: 6.2736206}
   m_SizeDelta: {x: -101.76721, y: -113.84424}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133780382
@@ -11963,7 +11963,7 @@ PrefabInstance:
     - target: {fileID: 5842009364114782149, guid: 687616b5672e46a49bbe0a2243d63034,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5842009364114782149, guid: 687616b5672e46a49bbe0a2243d63034,
         type: 3}
@@ -13964,7 +13964,7 @@ PrefabInstance:
     - target: {fileID: 983786476205294776, guid: cf39d112c34e9044f89fa8ec8118855c,
         type: 3}
       propertyPath: m_TagString
-      value: Door
+      value: FinalDoor
       objectReference: {fileID: 0}
     - target: {fileID: 1051098560866554888, guid: cf39d112c34e9044f89fa8ec8118855c,
         type: 3}
