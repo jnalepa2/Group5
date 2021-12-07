@@ -9,7 +9,10 @@ public class Vent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        thePlayer.transform.position = teleportTarget.transform.position;
+        GameObject triggerGO = other.gameObject;
+        if (triggerGO.tag == "Player") {
+            thePlayer.transform.position = teleportTarget.transform.position;
+        }
     }
 
 }
