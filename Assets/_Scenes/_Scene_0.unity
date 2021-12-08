@@ -1014,6 +1014,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: LockedDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 7380267539315070170, guid: 87113814f0de467468757118bc151373,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87113814f0de467468757118bc151373, type: 3}
 --- !u!1 &129335652 stripped
@@ -5391,7 +5396,7 @@ PrefabInstance:
     - target: {fileID: 7380267539315070170, guid: 87113814f0de467468757118bc151373,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.99636734
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7380267539315070170, guid: 87113814f0de467468757118bc151373,
         type: 3}
