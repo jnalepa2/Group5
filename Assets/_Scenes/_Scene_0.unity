@@ -8860,7 +8860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1545134758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13355,6 +13355,11 @@ PrefabInstance:
       propertyPath: shooting
       value: 
       objectReference: {fileID: 327682020}
+    - target: {fileID: 1949641713093402433, guid: d6a010de9bad34944817690e7b95fdc8,
+        type: 3}
+      propertyPath: popUpBlock
+      value: 
+      objectReference: {fileID: 1545134757}
     - target: {fileID: 1949641713093402435, guid: d6a010de9bad34944817690e7b95fdc8,
         type: 3}
       propertyPath: moveSpeed

@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     public Text moneyText;
     public Text livesText;
     public Text controlPopupText;
+	public GameObject popUpBlock;
 
     [Header("Set Dynamically")]
     public float health = 20;
@@ -163,11 +164,13 @@ public class Player : MonoBehaviour
         }
         else if (otherGO.tag == "LockedDoor" && hasKey1 == false)
         {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "This door is locked";
 
         }
         else if (otherGO.tag == "FinalDoor" && hasKey2 == false)
         {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "This door is locked";
 
         }
@@ -180,18 +183,23 @@ public class Player : MonoBehaviour
             health -= 2;
         }
         else if (otherGO.tag == "CommandTerminal") {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "Press Space to Capture Ship";
         }
         else if (otherGO.tag == "Scrap") {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "Press Space to Pick Up Scrap";
         }
         else if (otherGO.tag == "Ammo") {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "Press Space to Pick Up Ammo";
         }
         else if (otherGO.tag == "Key") {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "Press Space to Pick Up Yellow Key Pad";
         }
         else if (otherGO.tag == "Key2") {
+			popUpBlock.SetActive(true);
             controlPopupMessage = "Press Space to Pick Up Orange Key Pad";
         }
 
@@ -221,6 +229,7 @@ public class Player : MonoBehaviour
 
         if (otherGO.tag == "CommandTerminal" || otherGO.tag == "Scrap" || otherGO.tag == "Ammo" || otherGO.tag == "Key" || otherGO.tag == "Key2" || otherGO.tag == "LockedDoor" || otherGO.tag == "FinalDoor") {
             controlPopupMessage = "";
+			popUpBlock.SetActive(false);
         }
     }
 
