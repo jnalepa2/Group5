@@ -254,10 +254,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Over!
-
-
-    The aliens prevented you from repossessing their ship.'
+  m_Text: "Game Over!\n\nThe aliens prevented you from repossessing their ship.\n\nGame
+    Developed By:\nAlex London, James Nalepa, Michael Weiner, and Mike Muysenberg\n\nMusic
+    By:\nEric Matyas\r at www.soundimage.org"
 --- !u!222 &976025836
 CanvasRenderer:
   m_ObjectHideFlags: 0
