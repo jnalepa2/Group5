@@ -240,6 +240,7 @@ public class Player : MonoBehaviour
 
         if (otherGO.tag == "Ammo" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
+            popUpBlock.SetActive(false);
             controlPopupMessage = "";
             ammo += ammoPack;
         }
@@ -249,6 +250,7 @@ public class Player : MonoBehaviour
 			keyAcquired.Play();
 			
             Destroy(otherGO);
+            popUpBlock.SetActive(false);
             controlPopupMessage = "";
             hasKey1 = true;
             Key1();
@@ -260,12 +262,14 @@ public class Player : MonoBehaviour
 			keyAcquired2.Play();
 			
             Destroy(otherGO);
+            popUpBlock.SetActive(false);
             controlPopupMessage = "";
             hasKey2 = true;
             Key2();
         }
         else if (otherGO.tag == "Scrap" && Input.GetKeyDown("space")) {
             Destroy(otherGO);
+            popUpBlock.SetActive(false);
             controlPopupMessage = "";
             money += 100;
         }
