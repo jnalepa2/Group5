@@ -6,15 +6,22 @@ public class Door : MonoBehaviour
 {
     public Vector3 endPos;
     public float speed = 1.0f;
+	public AudioSource openingSound;
+	public AudioSource closingSound;
 
     private bool moving = false;
     private bool opening = true;
     private Vector3 startPos;
     private float delay = 0.0f;
+	
+	private bool doOpen = true;
+	private bool doClose = true;
 
     // Start is called before the first frame update
     void Start()
     {
+		openingSound = Instantiate<AudioSource>(openingSound);
+		closingSound = Instantiate<AudioSource>(closingSound);
         startPos = transform.position;
     }
 
@@ -25,13 +32,22 @@ public class Door : MonoBehaviour
         {
             if (opening)
             {
+				if(doOpen){
+					openingSound.Play();
+					doOpen = false;
+				}
                 moveDoor(endPos);
             }
             else
             {
+				if(doClose){
+					closingSound.Play();
+					doClose = false;
+				}
                 moveDoor(startPos);
             }
         }
+		
     }
 
     void moveDoor(Vector3 goalPos)
@@ -50,6 +66,8 @@ public class Door : MonoBehaviour
                 if (delay > 1.5f)
                 {
                     opening = false;
+					doOpen = true;
+					doClose = true;
                 }
             }
             else
