@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 	public float fireRate = 2;
 	public float projectileForce = 500;
 	public GameObject projectilePrefab;
+	public AudioSource firing;
+	public AudioSource death;
 	
 	[Header("Set Dynamically")]
 	public float health = 3;
@@ -22,6 +24,8 @@ public class Enemy : MonoBehaviour
 	
 	private GameObject thePlayer;
 	private Vector3 enemyStartPos;
+	
+	
 	
 	
     void Start()
@@ -70,6 +74,7 @@ public class Enemy : MonoBehaviour
 							//apply force to projectile to fire it
 							Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
 							rigidB.AddRelativeForce(direction * projectileForce);
+							firing.Play();
 						}
 					}
 				}
@@ -162,6 +167,15 @@ public class Enemy : MonoBehaviour
 	public void takeDamage(){
 		this.health -= 8;
 		if(health <= 0)		alive = false;
-		if(!alive)			Destroy(gameObject);
+		if(!alive){
+			if(canShoot)	death.Play();
+			StartCoroutine(wait(3));
+			Destroy(gameObject);
+		}
+	}
+	
+	public IEnumerator wait(float sec)
+	{
+		yield return new WaitForSeconds(sec);
 	}
 }
