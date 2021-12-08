@@ -142,17 +142,28 @@ MonoBehaviour:
   enemyProjectileDamage: 5
   fireRate: 1
   ammoPack: 5
-  hasKey: 0
+  hasKey1: 0
+  hasKey2: 0
   projectilePrefab: {fileID: 8483127831216495397, guid: e74d033fb9b6ec44f817046ab1e97e56,
     type: 3}
   gunEnd: {fileID: 1949641712348536427}
+  damage: {fileID: 0}
+  key1: {fileID: 0}
+  key2: {fileID: 0}
+  scrap: {fileID: 0}
+  startScreen: {fileID: 0}
+  handleDeath: {fileID: 0}
+  keyAcquired: {fileID: 3104854106800276503, guid: 259d5489b29c3be4cafaa59c8ba6df9f,
+    type: 3}
   healthText: {fileID: 0}
   ammoText: {fileID: 0}
   moneyText: {fileID: 0}
+  livesText: {fileID: 0}
   controlPopupText: {fileID: 0}
   health: 10
   ammo: 10
   money: 0
+  livesRemaining: 2
   nextFire: 0
   controlPopupMessage: 
 --- !u!54 &1949641713093402462

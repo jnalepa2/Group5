@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public GameObject scrap;
     public GameObject startScreen;
     public HandleDeath handleDeath;
+	public AudioSource keyAcquired;
 
     //health, ammo and money display
     public Text healthText;
@@ -229,6 +230,10 @@ public class Player : MonoBehaviour
             ammo += ammoPack;
         }
         else if (otherGO.tag == "Key" && Input.GetKeyDown("space")) {
+			keyAcquired = Instantiate<AudioSource>(keyAcquired);
+			keyAcquired.transform.position = transform.position;
+			keyAcquired.Play();
+			
             Destroy(otherGO);
             controlPopupMessage = "";
             hasKey1 = true;
@@ -236,6 +241,10 @@ public class Player : MonoBehaviour
         }
         else if (otherGO.tag == "Key2" && Input.GetKeyDown("space"))
         {
+			AudioSource keyAcquired2 = Instantiate<AudioSource>(keyAcquired);
+			keyAcquired2.transform.position = transform.position;
+			keyAcquired2.Play();
+			
             Destroy(otherGO);
             controlPopupMessage = "";
             hasKey2 = true;
