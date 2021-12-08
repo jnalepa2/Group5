@@ -51,13 +51,12 @@ MonoBehaviour:
   canShoot: 0
   visionZone: {fileID: 0}
   additionalVision: {fileID: 0}
-  fireRate: 2
+  fireRate: 0.7
   projectileForce: 100
-
   projectilePrefab: {fileID: 8483127831216495397, guid: baed8c5c959779541a5c8b7d22c81b5f,
     type: 3}
   firing: {fileID: 6791453322139321797}
-  death: {fileID: 0}
+  death: {fileID: 3261240479795977767, guid: 8470137aa328f0243b9f07246ee8dc50, type: 3}
   health: 3
   alive: 1
   playerSight: 0

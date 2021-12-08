@@ -81,11 +81,6 @@ public class Enemy : MonoBehaviour
 		}
     }
 	
-	void FireGun(float angle)
-    {
-            
-    }
-	
 	IEnumerator OnCollisionStay( Collision coll ) {
 		GameObject collidedWith = coll.gameObject;
 		if ( collidedWith.tag != "Ground" )
@@ -168,8 +163,9 @@ public class Enemy : MonoBehaviour
 		this.health -= 8;
 		if(health <= 0)		alive = false;
 		if(!alive){
-			if(canShoot)	death.Play();
-			StartCoroutine(wait(3));
+			AudioSource deathSound = Instantiate<AudioSource>(death);
+			deathSound.transform.position = transform.position;
+			deathSound.Play();
 			Destroy(gameObject);
 		}
 	}

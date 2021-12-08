@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7260821970424576496}
   - component: {fileID: 3261240479795977767}
+  - component: {fileID: 114249305006490140}
   m_Layer: 0
   m_Name: Turret Death
   m_TagString: Untagged
@@ -127,3 +128,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114249305006490140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928330998829957979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8840f0f4eca72264a831baade81f0d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
