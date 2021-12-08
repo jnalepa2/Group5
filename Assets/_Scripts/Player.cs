@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     public GameObject startScreen;
     public HandleDeath handleDeath;
 	public AudioSource keyAcquired;
+	public AudioSource shooting;
 
     //health, ammo and money display
     public Text healthText;
@@ -49,6 +50,8 @@ public class Player : MonoBehaviour
         if (livesRemaining == 2) {
             Time.timeScale = 0;
         }
+		
+		shooting = Instantiate<AudioSource>(shooting);
     }
 
     void Awake()
@@ -121,6 +124,8 @@ public class Player : MonoBehaviour
     {
         if (ammo > 0)
         {
+			shooting.transform.position = transform.position;
+			shooting.Play();
             //update time
             nextFire = Time.time + fireRate;
 
