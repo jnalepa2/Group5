@@ -8,11 +8,11 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter(Collision coll) {
         GameObject otherGO = coll.gameObject;
 
-        if (otherGO.tag == "Wall" || otherGO.tag == "Door" || otherGO.tag == "LockedDoor" || otherGO.tag == "FinalDoor") {
+        if (otherGO.tag != "Ground" && otherGO.tag != "Player") {
             Destroy(gameObject);
         }
-        else if (otherGO.tag == "Enemy") {
-            Destroy(gameObject);
+
+        if (otherGO.tag == "Enemy") {
             //call enemy script's function to decrement their health
 			
 			otherGO.GetComponent<Enemy>().takeDamage();
@@ -20,7 +20,6 @@ public class Projectile : MonoBehaviour
         else if (otherGO.tag == "Box")
         {
             Destroy(otherGO);
-            Destroy(gameObject);
         }
     }
 }
